@@ -1,6 +1,6 @@
 
 import Link from "next/link";
-import { ArrowRight, Shield, MapPin, Users, Sparkles } from "lucide-react";
+import { ArrowRight, Shield, Trophy, Users, Sparkles } from "lucide-react";
 import { Button } from "../ui/button";
 
 export function Hero() {
@@ -48,12 +48,12 @@ export function Hero() {
                         <div className="mt-10 flex flex-wrap gap-8">
                             <div className="flex items-center gap-2">
                                 <Users className="h-5 w-5 text-blue-500" />
-                                <span>10K+ Citizens</span>
+                                <span>Helping Communities</span>
                             </div>
 
                             <div className="flex items-center gap-2">
-                                <MapPin className="h-5 w-5 text-green-500" />
-                                <span>500+ Issues Resolved</span>
+                                <Trophy className="h-5 w-5 text-green-500" />
+                                <span>Earn Rewards</span>
                             </div>
 
                             <div className="flex items-center gap-2">
@@ -69,21 +69,21 @@ export function Hero() {
                             <img
                                 src="https://static.vecteezy.com/system/resources/thumbnails/049/084/478/small_2x/image-of-a-helping-hand-illustration-of-hands-reaching-for-each-other-vector.jpg"
                                 alt="Actify Hero"
-                                width={700}
-                                height={500}
+                                width={600}
+                                height={400}
                                 className="h-auto w-full object-cover"
                             />
                         </div>
 
-                        {/* Floating Card */}
-                        <div className="absolute -bottom-6 -left-6 rounded-2xl border bg-background/80 p-4 shadow-xl backdrop-blur-md">
+                        {/* Small Notification */}
+                        {/* <div className="absolute -bottom-6 -left-6 rounded-2xl border bg-background/80 p-4 shadow-xl backdrop-blur-md">
                             <p className="text-sm font-semibold">
                                 📍 Issue Detected
                             </p>
                             <p className="text-xs text-muted-foreground">
                                 Pothole reported & verified by AI
                             </p>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
