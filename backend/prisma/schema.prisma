@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+
+}
+
+
+
+
+enum ReportStatus {
+  OPEN
+  IN_PROGRESS
+  FIXED
+}
+
+
+enum Severity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model User {
+  id        String   @id
+
+  email     String   @unique
+  name      String?
+  imageUrl  String?
+
+  reports   Report[]
+  verifications Verification[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Report {
+  id          String   @id @default(uuid())
+
+  imageUrl    String
+
+  category    String
+  confidence  Float
+
+  severity    Severity @default(MEDIUM)
+
+  description String?
+
+  address     String
+  latitude    Float
+  longitude   Float
+
+  status      ReportStatus @default(OPEN)
+
+  verificationCount Int @default(0)
+  priorityScore     Float @default(0)
+
+  userId      String
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  verifications Verification[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Verification {
+  id        String @id @default(uuid())
+
+  reportId  String
+  report    Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  userId    String
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([reportId, userId])
+}
