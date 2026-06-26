@@ -85,7 +85,7 @@ export default function AIAnalyzerPage() {
       );
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/analyze`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/analyze`,
         {
           method: "POST",
           body: formData,
