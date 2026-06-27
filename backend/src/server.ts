@@ -2,11 +2,12 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import analyzeRoute from "./routes/analyze";
-
+import { clerkMiddleware } from "@clerk/express";
 
 dotenv.config();
 
 const app = express();
+app.use(clerkMiddleware());
 
 app.use(
   cors({

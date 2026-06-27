@@ -50,13 +50,6 @@ export const NavBar = () => {
           >
             Features
           </Link>
-
-          <Link
-            href="#about"
-            className="text-sm font-medium text-slate-600 hover:text-blue-600 transition"
-          >
-            About
-          </Link>
         </div>
 
         {/* Right Side */}

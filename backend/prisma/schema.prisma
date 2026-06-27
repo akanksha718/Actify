@@ -5,7 +5,7 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+output   = "../src/generated"
 }
 
 datasource db {
@@ -37,24 +37,30 @@ model User {
   name      String?
   imageUrl  String?
 
-  reports   Report[]
-  verifications Verification[]
+  xp         Int @default(0)
+  level      Int @default(1)
+
+  reports         Report[]
+  verifications   Verification[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Report {
-  id          String   @id @default(uuid())
+
+  id          String @id @default(uuid())
 
   imageUrl    String
 
   category    String
   confidence  Float
 
-  severity    Severity @default(MEDIUM)
+  severity    Severity
 
   description String?
+
+  department  String
 
   address     String
   latitude    Float
@@ -63,15 +69,17 @@ model Report {
   status      ReportStatus @default(OPEN)
 
   verificationCount Int @default(0)
-  priorityScore     Float @default(0)
 
-  userId      String
-  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  priorityScore Float @default(0)
+
+  userId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   verifications Verification[]
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Verification {
