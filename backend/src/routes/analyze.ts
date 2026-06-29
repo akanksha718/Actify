@@ -6,6 +6,7 @@ import prisma from "../config/prisma";
 import { requireAuth, getAuth } from "@clerk/express";
 import { clerkClient } from "@clerk/express";
 
+
 const router = Router();
 
 const upload = multer({

@@ -14,7 +14,7 @@ export default function StatsCard({
     icon: Icon,
 }: Props) {
     return (
-        <div className="bg-white rounded-[35px] p-8 shadow-sm flex items-center gap-6">
+        <div className="bg-white rounded-[12px] p-2 shadow-sm flex items-center gap-3">
 
             <div className={`w-24 h-24 rounded-3xl ${color} flex items-center justify-center`}>
 

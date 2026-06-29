@@ -2,10 +2,10 @@
 
 import {
   Calendar,
-  Shield,
   MapPin,
+  Building2,
+  CheckCircle2,
   ArrowRight,
-  Zap,
 } from "lucide-react";
 
 import { Report } from "@/types/report";
@@ -15,64 +15,162 @@ interface Props {
   report: Report;
 }
 
-export default function ReportCard({ report }: Props) {
+export default function ReportCard({
+  report,
+}: Props) {
+  const severityColors = {
+    LOW: "bg-green-100 text-green-700",
+
+    MEDIUM:
+      "bg-yellow-100 text-yellow-700",
+
+    HIGH: "bg-orange-100 text-orange-700",
+
+    CRITICAL:
+      "bg-red-100 text-red-700",
+  };
+
   return (
-    <div className="bg-white rounded-[35px] p-8 shadow-sm hover:shadow-lg transition-all">
+    <div className="bg-white border rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
 
-      <div className="flex justify-between items-center">
+      <div className="p-8 flex gap-8">
 
-        <div className="flex gap-6">
+        {/* IMAGE */}
 
-          <div className="w-28 h-28 rounded-3xl bg-gray-100 flex items-center justify-center">
+        <img
+          src={report.imageUrl}
+          alt={report.category}
+          className="w-40 h-40 rounded-3xl object-cover"
+        />
 
-            <MapPin className="text-gray-400" size={40} />
+        {/* INFO */}
+
+        <div className="flex-1">
+
+          <div className="flex justify-between">
+
+            <div>
+
+              <h2 className="text-3xl font-bold capitalize">
+                {report.category}
+              </h2>
+
+              <div className="flex items-center gap-2 mt-3 text-gray-500">
+
+                <MapPin size={18} />
+
+                {report.address}
+
+              </div>
+
+            </div>
+
+            <ReportStatus
+              status={report.status}
+            />
 
           </div>
 
-          <div>
+          {/* DESCRIPTION */}
 
-            <h2 className="text-3xl font-bold">
-              {report.title}
-            </h2>
+          <p className="mt-6 text-gray-600 leading-7">
 
-            <div className="flex gap-6 mt-5 text-gray-500">
+            {report.description}
 
-              <span className="flex items-center gap-2">
-                <Calendar size={18} />
-                {report.date}
-              </span>
+          </p>
 
-              <span className="flex items-center gap-2">
-                <Shield size={18} />
-                {report.category}
-              </span>
+          {/* BADGES */}
 
-              <span className="flex items-center gap-2 text-violet-600 font-semibold">
-                <Zap size={18} />
-                {report.severity}
-              </span>
+          <div className="flex gap-4 mt-6 flex-wrap">
+
+            <span
+              className={`px-4 py-2 rounded-full font-semibold ${severityColors[report.severity]}`}
+            >
+              {report.severity}
+            </span>
+
+            <span className="px-4 py-2 rounded-full bg-blue-100 text-blue-700">
+
+              {(report.confidence * 100).toFixed(
+                0
+              )}
+              % Confidence
+
+            </span>
+
+            <span className="px-4 py-2 rounded-full bg-violet-100 text-violet-700">
+
+              {report.department}
+
+            </span>
+
+          </div>
+
+          {/* FOOTER */}
+
+          <div className="grid grid-cols-4 gap-8 mt-8 border-t pt-6">
+
+            <div>
+
+              <div className="flex items-center gap-2 text-gray-400">
+
+                <Calendar size={16} />
+
+                Reported
+
+              </div>
+
+              <p className="font-semibold mt-2">
+                {new Date(
+                  report.createdAt
+                ).toLocaleDateString()}
+              </p>
+
+            </div>
+
+            <div>
+
+              <div className="flex items-center gap-2 text-gray-400">
+
+                <CheckCircle2 size={16} />
+
+                Verifications
+
+              </div>
+
+              <p className="font-semibold mt-2">
+                {report.verificationCount}
+              </p>
+
+            </div>
+
+            <div>
+
+              <div className="flex items-center gap-2 text-gray-400">
+
+                <Building2 size={16} />
+
+                Priority
+
+              </div>
+
+              <p className="font-semibold mt-2">
+                {report.priorityScore}
+              </p>
+
+            </div>
+
+            <div className="flex justify-end items-center">
+
+              <button className="w-12 h-12 rounded-full bg-violet-600 text-white hover:bg-violet-700 transition flex items-center justify-center">
+
+                <ArrowRight size={22} />
+
+              </button>
 
             </div>
 
           </div>
-
-        </div>
-
-        <div className="flex gap-5 items-center">
-
-          <ReportStatus status={report.status} />
-
-          <button className="bg-violet-600 text-white rounded-2xl px-6 py-4 font-semibold hover:bg-violet-700">
-
-            FAST TRACK
-
-          </button>
-
-          <button className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center">
-
-            <ArrowRight />
-
-          </button>
 
         </div>
 

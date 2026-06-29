@@ -4,6 +4,7 @@ import Link from "next/link";
 import { UserButton, useAuth } from "@clerk/nextjs";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AIChatDialog } from "@/components/chat/ai-chat-dialog";
 
 export const NavBar = () => {
   const { isSignedIn } = useAuth();
@@ -16,13 +17,13 @@ export const NavBar = () => {
           href="/"
           className="group flex items-center gap-3 transition-all"
         >
-          
-            <img
-              src="/favicon.ico"
-              alt="Actify Logo"
-              className="h-6 w-6"
-            />
-          
+
+          <img
+            src="/favicon.ico"
+            alt="Actify Logo"
+            className="h-6 w-6"
+          />
+
 
           <div>
             <h1 className="text-xl font-bold tracking-tight text-slate-900">
@@ -50,6 +51,16 @@ export const NavBar = () => {
           >
             Features
           </Link>
+          {isSignedIn && (
+            <AIChatDialog>
+              <Button
+                variant="ghost"
+                className="hidden sm:flex text-sm font-medium text-slate-600 hover:text-blue-600 transition"
+              >
+                Ask AI
+              </Button>
+            </AIChatDialog>
+          )}
         </div>
 
         {/* Right Side */}
@@ -57,7 +68,7 @@ export const NavBar = () => {
           {!isSignedIn ? (
             <>
               <Button
-                variant="ghost"
+                variant="outline"
                 className="hidden sm:flex"
                 asChild
               >
@@ -78,7 +89,7 @@ export const NavBar = () => {
             </>
           ) : (
             <>
-            <Button
+              <Button
                 className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
                 asChild
               >
@@ -87,16 +98,16 @@ export const NavBar = () => {
                 </Link>
               </Button>
 
-            <UserButton
-              appearance={{
-                elements: {
-                  avatarBox:
-                    "h-10 w-10 ring-2 ring-blue-100",
-                },
-              }}
-            />
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox:
+                      "h-10 w-10 ring-2 ring-blue-100",
+                  },
+                }}
+              />
             </>
-            
+
           )}
         </div>
       </div>

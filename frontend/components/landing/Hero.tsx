@@ -1,4 +1,6 @@
+"use client";
 
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Shield, Trophy, Users, Sparkles } from "lucide-react";
 import { Button } from "../ui/button";
@@ -7,15 +9,22 @@ export function Hero() {
     return (
         <section className="relative overflow-hidden bg-background">
             {/* Background Effects */}
-            <div className="absolute inset-0 ">
-                <div className="absolute  left-10 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl" />
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute left-10 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl" />
                 <div className="absolute bottom-20 right-10 h-72 w-72 rounded-full bg-purple-500/20 blur-3xl" />
             </div>
 
-            <div className="container mx-auto px-6 py-3 ">
+            <div className="relative z-10 container mx-auto px-6 py-3">
                 <div className="grid items-center gap-16 lg:grid-cols-2">
                     {/* Left Side */}
-                    <div>
+                    <motion.div
+                        initial={{ opacity: 0, x: -80 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{
+                            duration: 0.8,
+                            ease: "easeOut",
+                        }}
+                    >
                         <div className="mb-6 inline-flex items-center px-4 py-2 text-sm font-medium backdrop-blur-sm">
                             <Sparkles className="mr-2 h-4 w-4 text-blue-500" />
                             AI Powered Civic Issue Resolution
@@ -61,7 +70,7 @@ export function Hero() {
                                 <span>AI Verified Reports</span>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Right Side */}
                     <div className="relative">
@@ -74,19 +83,9 @@ export function Hero() {
                                 className="h-auto w-full object-cover"
                             />
                         </div>
-
-                        {/* Small Notification */}
-                        {/* <div className="absolute -bottom-6 -left-6 rounded-2xl border bg-background/80 p-4 shadow-xl backdrop-blur-md">
-                            <p className="text-sm font-semibold">
-                                📍 Issue Detected
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                                Pothole reported & verified by AI
-                            </p>
-                        </div> */}
                     </div>
                 </div>
             </div>
-        </section>
+        </section >
     );
 }

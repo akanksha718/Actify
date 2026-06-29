@@ -1,9 +1,11 @@
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { MessageCircle } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner"
+
 
 
 const geistSans = Geist({
@@ -25,7 +27,10 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>)
+  
+ {
+
   return (
     <html
       lang="en" suppressHydrationWarning
@@ -35,32 +40,8 @@ export default function RootLayout({
         <ClerkProvider>
           {children}
           <Toaster />
-          <button
-        className="
-          fixed
-          bottom-8
-          right-8
-          h-20
-          w-20
-          rounded-full
-          bg-gradient-to-r
-          from-purple-700
-          to-pink-500
-          shadow-xl
-          flex
-          items-center
-          justify-center
-          hover:scale-105
-          transition
-        "
-      >
-        <MessageCircle
-          size={34}
-          className="text-white"
-        />
-      </button>
         </ClerkProvider>
-        </body>
+      </body>
     </html>
   );
 }

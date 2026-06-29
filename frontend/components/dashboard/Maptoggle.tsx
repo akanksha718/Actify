@@ -1,8 +1,10 @@
 "use client";
 
 import { List, Map } from "lucide-react";
+import { useState } from "react";
 
 export default function MapToggle() {
+  const [isMapView, setIsMapView] = useState(false);
   return (
     <div className="bg-white rounded-2xl p-2 flex shadow-sm">
 
