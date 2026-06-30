@@ -10,6 +10,7 @@ import reportSubmit from "./routes/report-submit"
 import statsRouter from "./routes/stats"
 import leaderboardRouter from "./routes/leaderboard";
 import verifyRoutes from "./routes/verification"
+import prisma from "./config/prisma";
 
 dotenv.config();
 
@@ -26,10 +27,14 @@ app.use(
 );
 
 app.use(express.json());
-// app.get("/", (req, res) => {
-//   res.send("Backend is running 🚀");
-// });
-
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
+app.get("/health", async (req, res) => {
+  const users = await prisma.user.count();
+  console.log("Health check: ", users);
+  res.json({ ok: true, users });
+});
 app.use("/api/analyze", analyzeRoute);
 app.use("/api/users", userRoutes);
 app.use("/api/reports", reportRoutes);
