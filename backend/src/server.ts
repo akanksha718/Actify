@@ -20,7 +20,6 @@ app.use(clerkMiddleware());
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
       "https://actify-dqv3.vercel.app"
     ],
     credentials: true,

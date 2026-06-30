@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { ChatWithAi } from "../config/model";
 import prisma from "../config/prisma";
+import { clerkClient } from "@clerk/express";
 
 const router = Router();
 
@@ -22,7 +23,8 @@ router.post("/", async (req, res) => {
       });
     }
 
-    const user = await prisma.user.findUnique({
+    // Try to find the user
+    let user = await prisma.user.findUnique({
       where: {
         id: userId,
       },
@@ -36,10 +38,39 @@ router.post("/", async (req, res) => {
       },
     });
 
+    // Create user if not found
     if (!user) {
-      return res.status(404).json({
+      const clerkUser = await clerkClient.users.getUser(userId);
+
+      await prisma.user.create({
+        data: {
+          id: clerkUser.id,
+          email: clerkUser.emailAddresses[0].emailAddress,
+          name: `${clerkUser.firstName ?? ""} ${clerkUser.lastName ?? ""}`.trim(),
+          imageUrl: clerkUser.imageUrl,
+        },
+      });
+
+      // Fetch the newly created user
+      user = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+        include: {
+          reports: {
+            orderBy: {
+              createdAt: "desc",
+            },
+            take: 10,
+          },
+        },
+      });
+    }
+
+    if (!user) {
+      return res.status(500).json({
         success: false,
-        message: "User not found",
+        message: "Failed to create user",
       });
     }
 
@@ -49,6 +80,7 @@ router.post("/", async (req, res) => {
       success: true,
       reply,
     });
+
   } catch (error) {
     console.error("Chat Error:", error);
 

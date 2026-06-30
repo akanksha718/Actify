@@ -13,9 +13,12 @@ router.get("/", requireAuth(), async (req, res) => {
     const { userId } = getAuth(req);
 
     if (!userId) {
+      console.error("User ID not found in request");
       return res.status(401).json({
+
         success: false,
         message: "Unauthorized",
+
       });
     }
 
@@ -33,6 +36,7 @@ router.get("/", requireAuth(), async (req, res) => {
         },
       }),
     ]);
+    console.log("Stats fetched for user: ", userId, { totalReports, resolvedReports });
 
     return res.json({
       success: true,
