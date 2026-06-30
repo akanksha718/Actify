@@ -4,7 +4,7 @@ const SignUpPage = () => {
   return (
     <div>
       <SignUp
-        fallbackRedirectUrl="/dashboard"
+        fallbackRedirectUrl="/dashboard/me"
         signInFallbackRedirectUrl="/sign-in"
       />
     </div>

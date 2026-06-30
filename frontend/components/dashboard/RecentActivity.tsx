@@ -70,17 +70,14 @@ export default function RecentActivity({ setLen }: any) {
 
 
   return (
-    <section className="mt-16">
-
-      <div className="flex justify-between items-center mb-10">
+    <section className="mt-10 sm:mt-14 lg:mt-16">
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
         <div>
-
-          <h2 className="text-5xl font-bold">
+          <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl">
             My Reports
           </h2>
-
-          <p className="text-gray-400 text-xl mt-2">
+          <p className="mt-2 text-base text-gray-400 sm:text-lg lg:text-xl">
             Monitor your civic reports
           </p>
 
@@ -90,7 +87,7 @@ export default function RecentActivity({ setLen }: any) {
 
       </div>
 
-      <div className="space-y-8">
+      <div className="space-y-6 lg:space-y-8">
 
         {reports.map((report) => (
           <ReportCard

@@ -33,29 +33,27 @@ export default function ReportCard({
   return (
     <div className="bg-white border rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
 
-      <div className="p-8 flex gap-8">
+      <div className="flex flex-col gap-6 p-5 sm:p-6 lg:flex-row lg:gap-8 lg:p-8">
 
         {/* IMAGE */}
 
         <img
           src={report.imageUrl}
           alt={report.category}
-          className="w-40 h-40 rounded-3xl object-cover"
+          className="h-56 w-full rounded-2xl object-cover sm:h-72 lg:h-40 lg:w-40 lg:rounded-3xl"
         />
 
         {/* INFO */}
 
         <div className="flex-1">
-
-          <div className="flex justify-between">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
 
             <div>
-
-              <h2 className="text-3xl font-bold capitalize">
+              <h2 className="text-2xl font-bold capitalize sm:text-3xl">
                 {report.category}
               </h2>
 
-              <div className="flex items-center gap-2 mt-3 text-gray-500">
+              <div className="mt-3 flex items-start gap-2 text-sm text-gray-500 sm:text-base">
 
                 <MapPin size={18} />
 
@@ -73,7 +71,7 @@ export default function ReportCard({
 
           {/* DESCRIPTION */}
 
-          <p className="mt-6 text-gray-600 leading-7">
+          <p className="mt-5 text-sm leading-7 text-gray-600 sm:text-base">
 
             {report.description}
 
@@ -81,15 +79,15 @@ export default function ReportCard({
 
           {/* BADGES */}
 
-          <div className="flex gap-4 mt-6 flex-wrap">
+          <div className="mt-6 flex flex-wrap gap-3">
 
             <span
-              className={`px-4 py-2 rounded-full font-semibold ${severityColors[report.severity]}`}
+              className={`rounded-full px-3 py-2 text-sm font-semibold sm:px-4 ${severityColors[report.severity]}`}
             >
               {report.severity}
             </span>
 
-            <span className="px-4 py-2 rounded-full bg-blue-100 text-blue-700">
+            <span className="rounded-full px-3 py-2 text-sm font-semibold sm:px-4">
 
               {(report.confidence * 100).toFixed(
                 0
@@ -98,7 +96,7 @@ export default function ReportCard({
 
             </span>
 
-            <span className="px-4 py-2 rounded-full bg-violet-100 text-violet-700">
+            <span className="rounded-full px-3 py-2 text-sm font-semibold sm:px-4">
 
               {report.department}
 
@@ -108,11 +106,11 @@ export default function ReportCard({
 
           {/* FOOTER */}
 
-          <div className="grid grid-cols-4 gap-8 mt-8 border-t pt-6">
+          <div className="mt-8 grid grid-cols-2 gap-6 border-t pt-6 lg:grid-cols-4">
 
             <div>
 
-              <div className="flex items-center gap-2 text-gray-400">
+              <div className="flex items-center gap-2 text-sm text-gray-400">
 
                 <Calendar size={16} />
 
@@ -120,7 +118,7 @@ export default function ReportCard({
 
               </div>
 
-              <p className="font-semibold mt-2">
+              <p className="mt-2 text-sm font-semibold sm:text-base">
                 {new Date(
                   report.createdAt
                 ).toLocaleDateString()}
@@ -130,7 +128,7 @@ export default function ReportCard({
 
             <div>
 
-              <div className="flex items-center gap-2 text-gray-400">
+              <div className="flex items-center gap-2 text-sm text-gray-400">
 
                 <CheckCircle2 size={16} />
 
@@ -138,7 +136,7 @@ export default function ReportCard({
 
               </div>
 
-              <p className="font-semibold mt-2">
+              <p className="mt-2 text-sm font-semibold sm:text-base">
                 {report.verificationCount}
               </p>
 
@@ -146,7 +144,7 @@ export default function ReportCard({
 
             <div>
 
-              <div className="flex items-center gap-2 text-gray-400">
+              <div className="flex items-center gap-2 text-sm text-gray-400">
 
                 <Building2 size={16} />
 
@@ -154,19 +152,19 @@ export default function ReportCard({
 
               </div>
 
-              <p className="font-semibold mt-2">
+              <p className="mt-2 text-sm font-semibold sm:text-base">
                 {report.priorityScore}
               </p>
 
             </div>
 
-            <div className="flex justify-end items-center">
+            <div className="col-span-2 flex justify-end lg:col-span-1">
 
-              <button className="w-12 h-12 rounded-full bg-violet-600 text-white hover:bg-violet-700 transition flex items-center justify-center">
+              {/* <button className="flex h-11 w-11 items-center justify-center rounded-full bg-violet-600 text-white transition hover:bg-violet-700 sm:h-12 sm:w-12">
 
                 <ArrowRight size={22} />
 
-              </button>
+              </button> */}
 
             </div>
 

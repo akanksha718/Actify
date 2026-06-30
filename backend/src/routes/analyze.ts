@@ -72,35 +72,35 @@ router.post(
       const severity = ["LOW", "MEDIUM", "HIGH", "CRITICAL"].includes(aiResult.severity)
         ? aiResult.severity
         : "MEDIUM";
-      const report = await prisma.report.create({
-        data: {
+      // const report = await prisma.report.create({
+      //   data: {
 
-          imageUrl,
+      //     imageUrl,
 
-          category: aiResult.category,
-          confidence: aiResult.confidence,
-          severity: severity,
-          description: aiResult.description,
-          department: aiResult.recommendedDepartment,
+      //     category: aiResult.category,
+      //     confidence: aiResult.confidence,
+      //     severity: severity,
+      //     description: aiResult.description,
+      //     department: aiResult.recommendedDepartment,
 
-          address,
-          latitude: Number(latitude),
-          longitude: Number(longitude),
+      //     address,
+      //     latitude: Number(latitude),
+      //     longitude: Number(longitude),
 
-          userId: userId,
-        }
-      })
+      //     userId: userId,
+      //   }
+      // })
 
-      await prisma.user.update({
-        where: {
-          id: userId
-        },
-        data: {
-          xp: {
-            increment: 10
-          }
-        }
-      })
+      // await prisma.user.update({
+      //   where: {
+      //     id: userId
+      //   },
+      //   data: {
+      //     xp: {
+      //       increment: 10
+      //     }
+      //   }
+      // })
 
       // TODO:
       // Save report in database using Prisma

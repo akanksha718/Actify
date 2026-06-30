@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getAddressFromCoords } from "@/services/location";
-import { Upload, Sparkles, MapPin } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { useLocation } from "@/hooks/useLocation";
 import { toast } from "sonner"
 import { useAuth } from "@clerk/nextjs";
@@ -10,14 +10,18 @@ import { submitReport } from "@/lib/api-client";
 import { AnalyzerHero } from "@/components/ai/analyzer-hero";
 import { UploadCard } from "@/components/ai/upload-card";
 import { SuccessDialog } from "@/components/ai/sucess-dialog";
+import { Button } from "@/components/ui/button"
 
 export default function AIAnalyzerPage() {
+
   const [image, setImage] = useState<File | null>(null);
   const { location, loading, error } = useLocation();
   const [address, setAddress] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<any>(null);
+  const [analysis, setAnalysis] = useState<any>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const { getToken } = useAuth();
 
@@ -35,19 +39,6 @@ export default function AIAnalyzerPage() {
     fetchAddress();
   }, [location]);
 
-  const handleImageUpload = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (e.target.files?.[0]) {
-      setImage(e.target.files[0]);
-    }
-  };
-
-  const removeImage = () => {
-    setImage(null);
-  };
-  
-    
 
   useEffect(() => {
     if (!image) {
@@ -125,12 +116,64 @@ export default function AIAnalyzerPage() {
       console.log(data);
 
       setResult(data);
-      setSubmitted(true);
+      setAnalysis(data);
     } catch (error) {
       console.error(error);
       toast.error("Failed to analyze image. Please try again.");
     } finally {
       setIsAnalyzing(false);
+    }
+  };
+
+
+  const handleSubmit = async () => {
+    try {
+      setIsSubmitting(true);
+
+      const token = await getToken();
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/submit`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            imageUrl: result.imageUrl,
+            category: result.category,
+            confidence: result.confidence,
+            severity: result.severity,
+            description: result.description,
+            department:
+              result.recommendedDepartment,
+
+            address: result.address,
+            latitude:result.latitude,
+            longitude: result.longitude,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed");
+      }
+
+      toast.success("Report submitted!");
+
+      setSubmitted(true);
+
+      setResult(null);
+
+      setImage(null);
+
+      setPreviewUrl("");
+
+    } catch (err) {
+      toast.error("Failed to submit report.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -141,7 +184,7 @@ export default function AIAnalyzerPage() {
       {/* Main Content */}
       <div className="mt-2 grid lg:grid-cols-2 gap-12 items-start max-w-7xl mx-auto">
         {/* Upload Section */}
-      
+
         <UploadCard
           image={image}
           setImage={setImage}
@@ -295,7 +338,19 @@ export default function AIAnalyzerPage() {
 
             </div>
           )}
+          {result && (
+            <Button
+              className="mt-8 w-full"
+              disabled={isSubmitting}
+              onClick={handleSubmit}
+            >
+              {isSubmitting
+                ? "Submitting..."
+                : "Submit Report"}
+            </Button>
+          )}
         </div>
+
         <SuccessDialog open={submitted} onClose={() => setSubmitted(false)} />
       </div>
     </div>
