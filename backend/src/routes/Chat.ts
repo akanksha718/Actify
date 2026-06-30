@@ -17,6 +17,7 @@ router.post("/", async (req, res) => {
     }
 
     if (!userId) {
+      console.error("User ID is required in request body");
       return res.status(401).json({
         success: false,
         message: "User ID is required",
@@ -68,6 +69,7 @@ router.post("/", async (req, res) => {
     }
 
     if (!user) {
+      console.error("Failed to create or fetch user after creation");
       return res.status(500).json({
         success: false,
         message: "Failed to create user",

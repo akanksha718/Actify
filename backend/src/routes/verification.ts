@@ -13,24 +13,12 @@ router.get("/feed", requireAuth(), async (req, res) => {
             return res.status(401).json({ message: "Unauthorized" });
 
         const reports = await prisma.report.findMany({
-
             where: {
-
-                // don't show my own reports
                 NOT: {
                     userId,
                 },
-
-                // don't show reports I already verified
-                verifications: {
-                    none: {
-                        userId,
-                    },
-                },
             },
-
             include: {
-
                 user: {
                     select: {
                         id: true,
@@ -38,16 +26,25 @@ router.get("/feed", requireAuth(), async (req, res) => {
                         imageUrl: true,
                     },
                 },
-
+                verifications: {
+                    where: {
+                        userId,
+                    },
+                    select: {
+                        id: true,
+                    },
+                },
             },
-
             orderBy: {
                 createdAt: "desc",
             },
-
         });
+        const result = reports.map((report) => ({
+            ...report,
+            verifiedByMe: report.verifications.length > 0,
+        }));
 
-        res.json(reports);
+        res.json(result);
 
     } catch (err) {
         console.log(err);

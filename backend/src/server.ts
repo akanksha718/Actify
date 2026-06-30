@@ -26,6 +26,17 @@ app.use(
   })
 );
 
+// app.use(
+//   cors({
+//     origin: [
+//       "http://localhost:3000",
+//       process.env.FRONTEND_URL!,
+//     ],
+//     credentials: true,
+//   })
+// );
+
+
 app.use(express.json());
 app.get("/", (req, res) => {
   res.json({ message: "Backend is running 🚀" });

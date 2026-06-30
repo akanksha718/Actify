@@ -31,6 +31,8 @@ export interface Report {
 
   priorityScore: number;
 
+  verifiedByMe?: boolean;
+
   createdAt: string;
 }
 

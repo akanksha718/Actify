@@ -173,15 +173,16 @@ export default function CummunityCard({
                             <div className="col-span-2 flex justify-end lg:col-span-1">
 
                                 <button
-
+                                    disabled={report.verifiedByMe}
                                     onClick={() => onVerify(report.id)}
-
-                                    className="rounded-xl bg-green-600 px-5 py-3 text-white font-semibold hover:bg-green-700 transition"
-
+                                    className={`rounded-xl px-5 py-3 font-semibold transition ${report.verifiedByMe
+                                            ? "bg-gray-400 cursor-not-allowed text-white"
+                                            : "bg-green-600 hover:bg-green-700 text-white"
+                                        }`}
                                 >
-
-                                    Verify Report
-
+                                    {report.verifiedByMe
+                                        ? "Verified ✓"
+                                        : "Verify Report"}
                                 </button>
 
                             </div>

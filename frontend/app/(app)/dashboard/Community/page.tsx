@@ -5,7 +5,7 @@ import { Report } from "@/types/report";
 import { useState, useEffect } from "react"
 import CommunityCard from "@/components/dashboard/CummunityCard"
 import { getToken } from '@clerk/nextjs';
-import {toast} from "sonner"
+import { toast } from "sonner"
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const page = () => {
@@ -65,7 +65,16 @@ const page = () => {
             toast("Verified");
 
             setReports((prev) =>
-                prev.filter((r) => r.id !== id)
+                prev.map((report) =>
+                    report.id === id
+                        ? {
+                            ...report,
+                            verificationCount:
+                                report.verificationCount + 1,
+                            verifiedByMe: true,
+                        }
+                        : report
+                )
             );
 
         }
