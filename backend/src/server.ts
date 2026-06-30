@@ -27,9 +27,9 @@ app.use(
 );
 
 app.use(express.json());
-// app.get("/", (req, res) => {
-//   res.send("Backend is running 🚀");
-// });
+app.get("/", (req, res) => {
+  res.json({ message: "Backend is running 🚀" });
+});
 app.get("/health", async (req, res) => {
   const users = await prisma.user.count();
   console.log("Health check: ", users);
