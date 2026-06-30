@@ -6,9 +6,12 @@ import { useState, useEffect } from "react"
 import CommunityCard from "@/components/dashboard/CummunityCard"
 import { getToken } from '@clerk/nextjs';
 import { toast } from "sonner"
+import CommunityMap from '@/components/dashboard/CommunityCard';
+
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const page = () => {
+    const [mapReports, setMapReports] = useState([]);
     const [reports, setReports] = useState<Report[]>([]);
     useEffect(() => {
 
@@ -81,6 +84,25 @@ const page = () => {
 
     };
 
+    const fetchMapReports = async () => {
+        const token = await getToken();
+
+        const res = await fetch(
+            `${API_URL}/api/map/reports`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        const data = await res.json();
+
+        setMapReports(data);
+    };
+
+    fetchMapReports();
+
     return (
         <section className="mt-10 sm:mt-14 lg:mt-16">
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -95,6 +117,9 @@ const page = () => {
 
                 </div>
 
+            </div>
+            <div className="mb-8">
+                <CommunityMap reports={mapReports} />
             </div>
 
             <div className="space-y-6 lg:space-y-8">

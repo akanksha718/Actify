@@ -11,6 +11,8 @@ import statsRouter from "./routes/stats"
 import leaderboardRouter from "./routes/leaderboard";
 import verifyRoutes from "./routes/verification"
 import prisma from "./config/prisma";
+import mapRoutes from "./routes/map";
+
 
 dotenv.config();
 
@@ -54,6 +56,7 @@ app.use("/api/submit", reportSubmit);
 app.use("/api/stats", statsRouter);
 app.use("/api/leaderboard", leaderboardRouter);
 app.use("/api/verification",verifyRoutes);
+app.use("/api/map", mapRoutes);
 
 app.listen(8000, () => {
   console.log(
