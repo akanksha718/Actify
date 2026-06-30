@@ -15,7 +15,6 @@
   "dependencies": {
     "@clerk/express": "^2.1.32",
     "@google/genai": "^2.10.0",
-    "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "axios": "^1.18.1",
     "cloudinary": "^2.10.0",
